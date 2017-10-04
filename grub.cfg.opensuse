@@ -1,0 +1,75 @@
+if [ "$grub_cpu" = "arm64" ]; then
+  menuentry 'Install openSUSE Leap 42.3' {
+    set net_default_server=download.opensuse.org
+    set basepath='ports/aarch64/distribution/leap/42.3/repo/oss'
+    echo "###############################################"
+    echo "#                                             #"
+    echo "#                   WARNING                   #"
+    echo "#                                             #"
+    echo "###############################################"
+    echo ''
+    echo 'You selected openSUSE Leap 42.3.'
+    echo ''
+    echo 'This version does not have support for the Raspberry Pi'
+    echo 'disk layout yet. To install this distribution, please'
+    echo 'go to the Expert Partitioner in the partitioning step and'
+    echo 'select "Rescan Devices". Then add the EFI (FAT32), swap and'
+    echo 'root partitions manually.'
+    echo
+    echo 'Future versions will have this fixed.'
+    echo
+    echo 'Loading installer into RAM ...'
+    set kernelargs=""
+
+    # Allow for text mode installation if the user went for it
+    if [ "$textmode" ]; then
+      set kernelargs="$kernelargs console=ttyS0,115200"
+    fi
+
+    # HDMI connection detection is broken in 42.3, rely on efifb for now
+    set kernelargs="$kernelargs BrokenModules=vc4"
+
+    linux (http)/$basepath/boot/aarch64/linux install=http://download.opensuse.org/${basepath}/ $kernelargs
+    initrd (http)/$basepath/boot/aarch64/initrd
+    echo 'Running installer ...'
+  }
+
+  menuentry 'Install openSUSE Tumbleweed' {
+    set net_default_server=download.opensuse.org
+    set basepath='ports/aarch64/tumbleweed/repo/oss'
+
+    echo "###############################################"
+    echo "#                                             #"
+    echo "#                   WARNING                   #"
+    echo "#                                             #"
+    echo "###############################################"
+    echo ''
+    echo 'You selected openSUSE Tumbleweed.'
+    echo ''
+    echo 'This version does not have support for the Raspberry Pi'
+    echo 'disk layout yet. To install this distribution, please'
+    echo 'go to the Expert Partitioner in the partitioning step and'
+    echo 'select "Rescan Devices". Then add the EFI (FAT32), swap and'
+    echo 'root partitions manually.'
+    echo
+    echo 'Future versions will have this fixed.'
+    echo
+    echo 'Loading installer into RAM ...'
+    set kernelargs=""
+
+    # Allow for text mode installation if the user went for it
+    if [ "$textmode" ]; then
+      set kernelargs="$kernelargs console=ttyS0,115200"
+    fi
+
+    # HDMI connection detection is still broken upstream?
+    set kernelargs="$kernelargs BrokenModules=vc4"
+
+    linux (http)/$basepath/boot/aarch64/linux install=http://download.opensuse.org/${basepath}/ $kernelargs
+    initrd (http)/$basepath/boot/aarch64/initrd
+    echo 'Running installer ...'
+  }
+else
+  menuentry "No distribution installer available on 32bit yet" { echo }
+  menuentry "Please see the wiki for instructions on how to get dd'able images" { echo }
+fi
