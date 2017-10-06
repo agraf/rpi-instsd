@@ -72,7 +72,9 @@ function build_arch()
         export CROSS_COMPILE="$CROSS_COMPILE_ARMV6"
 	GRUB_TARGET=arm
 	GRUB_TYPE=arm-efi
-	GRUB_GCC="${CROSS_COMPILE}gcc -march=armv6 -marm"
+        # Use armv5 target for now as gcc7 compiles wrong code with march=armv6:
+        #   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82445
+	GRUB_GCC="${CROSS_COMPILE}gcc -march=armv5 -marm"
         ;;
     armv7)
         UBOOT_CONFIG=rpi_2_defconfig
