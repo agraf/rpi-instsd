@@ -6,6 +6,17 @@ teach your Raspberry Pi normal booting of distributions. With this, you
 can either directly install a distribution from the network or using
 a USB stick.
 
+## Build requirements
+
+You need the following packages on your host:
+
+* Cross compilers for ARM and AArch64
+* xz development packages (zypper in xz-devel)
+* dtc (zypper in dtc)
+* kpartx (zypper in kpartx)
+
+For most of them, the script will warn you if the prerequisite is not met.
+
 ## Building
 
 This command will give you a working sd.raw image which can then be
