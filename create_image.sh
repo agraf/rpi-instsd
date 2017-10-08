@@ -152,7 +152,7 @@ mkdir -p mnt
 mount "/dev/mapper/${FATPART}" mnt
 
 # Copy all files to the FAT partition
-cp firmware/boot/{start,fixup,boot,LIC,COP}* mnt/
+cp firmware/boot/{start,fixup,boot,LIC,COP,overl,bcm}* mnt/
 cp u-boot/kernel*img mnt/
 mkdir -p mnt/efi/boot
 cp grub/build-armv6/grub.efi mnt/grub_armv6.efi
