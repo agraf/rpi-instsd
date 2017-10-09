@@ -1,1 +1,2 @@
-enable_serial=1
+# Needed for serial on the RPi3 - disable if you don't need it
+enable_uart=1
