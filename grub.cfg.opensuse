@@ -26,9 +26,6 @@ if [ "$grub_cpu" = "arm64" ]; then
       set kernelargs="$kernelargs console=ttyS0,115200"
     fi
 
-    # HDMI connection detection is broken in 42.3, rely on efifb for now
-    set kernelargs="$kernelargs BrokenModules=vc4"
-
     linux (http)/$basepath/boot/aarch64/linux install=http://download.opensuse.org/${basepath}/ $kernelargs
     initrd (http)/$basepath/boot/aarch64/initrd
     echo 'Running installer ...'
@@ -61,9 +58,6 @@ if [ "$grub_cpu" = "arm64" ]; then
     if [ "$textmode" ]; then
       set kernelargs="$kernelargs console=ttyS0,115200"
     fi
-
-    # HDMI connection detection is still broken upstream?
-    set kernelargs="$kernelargs BrokenModules=vc4"
 
     linux (http)/$basepath/boot/aarch64/linux install=http://download.opensuse.org/${basepath}/ $kernelargs
     initrd (http)/$basepath/boot/aarch64/initrd
