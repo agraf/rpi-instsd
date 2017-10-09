@@ -1,0 +1,43 @@
+// U-Boot specific hints for certain devices 
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2837", "brcm,bcm2710";
+
+    fragment@0 {
+        target = <&v7_cpu0>;
+        __overlay__ {
+            compatible = "arm,cortex-a53";
+            enable-method = "spin-table";
+            cpu-release-addr = <0x0 0xd8>;
+        };
+    };
+
+    fragment@1 {
+        target = <&v7_cpu1>;
+        __overlay__ {
+            compatible = "arm,cortex-a53";
+            enable-method = "spin-table";
+            cpu-release-addr = <0x0 0xe0>;
+        };
+    };
+
+    fragment@2 {
+        target = <&v7_cpu2>;
+        __overlay__ {
+            compatible = "arm,cortex-a53";
+            enable-method = "spin-table";
+            cpu-release-addr = <0x0 0xe8>;
+        };
+    };
+
+    fragment@3 {
+        target = <&v7_cpu3>;
+        __overlay__ {
+            compatible = "arm,cortex-a53";
+            enable-method = "spin-table";
+            cpu-release-addr = <0x0 0xf0>;
+        };
+    };
+};

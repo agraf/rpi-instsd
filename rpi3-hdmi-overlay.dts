@@ -1,0 +1,16 @@
+// Upstream kernels can not detect the presence of an HDMI connection on the
+// RPi3, so force it to always on there until the extgpio driver is available
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2837", "brcm,bcm2710";
+
+    fragment@0 {
+        target = <&hdmi>;
+        __overlay__ {
+            hpd-gpios = <&gpio 46 0>;
+        };
+    };
+};
+

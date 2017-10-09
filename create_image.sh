@@ -98,6 +98,8 @@ function build_arch()
     (
         cd u-boot
         make $UBOOT_CONFIG
+        echo "# CONFIG_OF_EMBED is not set" >> .config
+        echo "CONFIG_OF_BOARD=y" >> .config
         make -j${NR_CPUS}
         mv u-boot.bin $UBOOT_KERNEL
         make clean
@@ -152,7 +154,8 @@ mkdir -p mnt
 mount "/dev/mapper/${FATPART}" mnt
 
 # Copy all files to the FAT partition
-cp firmware/boot/{start,fixup,boot,LIC,COP,overl,bcm}* mnt/
+cp firmware/boot/{start,fixup,boot,LIC,COP,bcm}* mnt/
+cp -r firmware/boot/overlays mnt/
 cp u-boot/kernel*img mnt/
 mkdir -p mnt/efi/boot
 cp grub/build-armv6/grub.efi mnt/grub_armv6.efi
@@ -160,6 +163,10 @@ cp grub/build-aarch64/grub.efi mnt/grub_aarch64.efi
 cp grub.cfg mnt/
 cp config.txt mnt/
 mkimage -C none -A arm -T script -d boot.script mnt/boot.scr
+dtc -@ -I dts -O dtb -o mnt/overlays/uboot.dtbo uboot-overlay.dts
+dtc -@ -I dts -O dtb -o mnt/overlays/upstream-mmc.dtbo upstream-mmc-overlay.dts
+dtc -@ -I dts -O dtb -o mnt/overlays/cpu-a53.dtbo cpu-a53-overlay.dts
+dtc -@ -I dts -O dtb -o mnt/overlays/rpi3-hdmi.dtbo rpi3-hdmi-overlay.dts
 
 # Clean up
 umount mnt

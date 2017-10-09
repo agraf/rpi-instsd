@@ -1,2 +1,18 @@
 # Needed for serial on the RPi3 - disable if you don't need it
 enable_uart=1
+
+# These are not applied automatically? Needed to use respective upstream drivers.
+dtoverlay=vc4-kms-v3d
+dtoverlay=dwc2
+
+# U-Boot needs to know which drivers to load when - tell it here
+dtoverlay=uboot
+
+# Older kernels didn't support HDMI connection detection on the rpi3, so force
+# HDMI to always plugged in there
+dtoverlay=rpi3-hdmi
+
+# These overlays fix divergences between the RPi device tree and what
+# upstream provides
+dtoverlay=upstream-mmc
+dtoverlay=cpu-a53

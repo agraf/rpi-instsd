@@ -1,0 +1,30 @@
+// U-Boot specific hints for certain devices 
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2708";
+
+    fragment@0 {
+        target = <&soc>;
+        __overlay__ {
+            u-boot,dm-pre-reloc;
+        };
+    };
+
+    fragment@1 {
+        target = <&uart0>;
+        __overlay__ {
+            u-boot,dm-pre-reloc;
+            skip-init;
+        };
+    };
+
+    fragment@2 {
+        target = <&uart1>;
+        __overlay__ {
+            u-boot,dm-pre-reloc;
+            skip-init;
+        };
+    };
+};
